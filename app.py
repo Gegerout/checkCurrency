@@ -1,15 +1,25 @@
-import os
-from flask import Flask, redirect, render_template, request, url_for
-
+import time
+from http.server import HTTPServer, BaseHTTPRequestHandler
 import currencyRequest
 
-app = Flask(__name__)
+class Server(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
 
-@app.route("/", methods=("GET", "POST"))
-def index():
-    if request.method == "GET":
-        result = currencyRequest.sendRequest()
+        # get the page
+        path = self.path
+        if path == '/':
+            currencyRequest.sendRequest()
+            with open('templates/index.html', 'rb') as page:
+                self.wfile.write(page.read())
 
-        return render_template("index.html", result=result)
 
-app.run(host='0.0.0.0', port=5000)
+try:
+    server = HTTPServer(('localhost', 8080), Server)
+    server.serve_forever()
+except:
+    pass
+
+server.server_close()
