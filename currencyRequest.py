@@ -1,3 +1,8 @@
+import subprocess
+import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "install", 'selenium'])
+
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
