@@ -12,7 +12,7 @@ class Server(BaseHTTPRequestHandler):
         path = self.path
         if path == '/':
             currencyRequest.sendRequest()
-            with open('templates/index.html', 'rb') as page:
+            with open('index.html', 'rb') as page:
                 self.wfile.write(page.read())
 
 
