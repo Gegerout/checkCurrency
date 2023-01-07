@@ -8,4 +8,4 @@ def index():
     result = currencyRequest.sendRequest()
     return render_template("index.html", result=result)
 
-app.run(host='0.0.0.0', port=8080)
+app.run(host='0.0.0.0', port=5000)
